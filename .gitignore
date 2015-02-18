@@ -42,4 +42,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+#Folders
 /.metadata
+/TheServer/bin
