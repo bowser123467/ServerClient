@@ -1,8 +1,12 @@
 package me.tyler.server;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PacketFactory {
+	
+	private static List<PacketHook> hooks = new ArrayList<PacketHook>();
 	
 	private static byte PACKET_HANDSHAKE = 1;
 	private static byte PACKET_LOGIN_STATUS = 2;
@@ -137,7 +141,17 @@ public class PacketFactory {
 			
 			user.setUsername(name);
 			
+		}else{
+			for(PacketHook hook : hooks){
+				if(hook.getPacketId() == packetId){
+					hook.onReceive(server, user, buf);
+				}
+			}
 		}
+		
+	}
+
+	public static void hook(PacketHook packetHook) {
 		
 	}
 	

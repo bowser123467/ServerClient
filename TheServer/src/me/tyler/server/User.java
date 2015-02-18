@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
 
