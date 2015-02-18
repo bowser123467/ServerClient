@@ -1,4 +1,4 @@
-package me.tyler.server;
+package me.tyler.client;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +23,8 @@ public class User {
 		try {
 			return socket.getOutputStream();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
+			disconnect();
 		}
 		return null;
 	}
@@ -34,7 +35,8 @@ public class User {
 		try {
 			return socket.getInputStream();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
+			disconnect();
 		}
 		
 		return null;
@@ -49,7 +51,7 @@ public class User {
 			isTimedout = true;
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 			disconnect();
 		}
 	}
@@ -71,9 +73,6 @@ public class User {
 		} catch(SocketTimeoutException e) {
 			return new byte[0];
 		} catch (IOException e) {
-			e.printStackTrace();
-			disconnect();
-		}catch(NullPointerException e){
 			System.err.println(e.getMessage());
 			disconnect();
 		}
