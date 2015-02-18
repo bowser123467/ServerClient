@@ -27,12 +27,16 @@ public class Client {
 	
 	private void run() {
 		while(me.isConnected()){
-			byte[] data = me.readData();
-			if(data != null){
-				if(data.length > 0){
-					ByteBuffer buf = ByteBuffer.wrap(data);
-					PacketFactory.process(buf, this);
-				}
+			runOnce();
+		}
+	}
+	
+	public void runOnce(){
+		byte[] data = me.readData();
+		if(data != null){
+			if(data.length > 0){
+				ByteBuffer buf = ByteBuffer.wrap(data);
+				PacketFactory.process(buf, this);
 			}
 		}
 	}

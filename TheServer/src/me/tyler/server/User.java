@@ -4,17 +4,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 public class User {
 
+	private static int nextId = 0;
+	
 	private Socket socket;
 	private boolean isTimedout;
 	private String username;
+	private int uniqueId;
 	
 	public User(Socket socket){
 		this.socket = socket;
 		isTimedout = false;
+		uniqueId = nextId++;
 	}
 	
 	public OutputStream getOutput(){
@@ -35,6 +40,7 @@ public class User {
 			return socket.getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
+			isTimedout = true;
 		}
 		
 		return null;
@@ -96,9 +102,13 @@ public class User {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			isTimedout = true;
 			e.printStackTrace();
 		}
+		isTimedout = true;
+	}
+
+	public int getUniqueID() {
+		return uniqueId;
 	}
 	
 }

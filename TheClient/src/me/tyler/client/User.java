@@ -75,6 +75,9 @@ public class User {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			disconnect();
+		} catch(NullPointerException e){
+			System.err.println(e.getMessage());
+			disconnect();
 		}
 		return new byte[0];
 	}

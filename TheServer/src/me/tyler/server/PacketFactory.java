@@ -7,7 +7,8 @@ public class PacketFactory {
 	private static byte PACKET_HANDSHAKE = 1;
 	private static byte PACKET_LOGIN_STATUS = 2;
 	private static byte PACKET_CHAT_MESSAGE = 3;
-	
+	private static byte PACKET_QUIT = 4;
+	private static byte PACKET_CHANGE_NAME = 5;
 	
 	public static byte[] getHandshakePacket(){
 		ByteBuffer buf = getLazyBuffer(8);
@@ -57,6 +58,27 @@ public class PacketFactory {
 		return buf.array();
 	}
 	
+	public static byte[] getNameChangePacket(String name){
+		byte[] byteName = name.getBytes();
+		ByteBuffer buf = getLazyBuffer(20);
+		
+		buf.put(PACKET_CHANGE_NAME);
+		
+		if(byteName.length > Constants.MAX_NAME_LENGTH){
+			byte[] shortBytes = new byte[Constants.MAX_NAME_LENGTH];
+			
+			for(int i = 0; i < shortBytes.length;i++){
+				shortBytes[i] = byteName[i];
+			}
+			
+			byteName = shortBytes;
+		}
+		
+		buf.put(byteName);
+		
+		return buf.array();
+	}
+	
 	private static ByteBuffer getLazyBuffer(int size){
 		
 		if(size <= 0){
@@ -75,10 +97,9 @@ public class PacketFactory {
 	}
 
 	public static void process(User user, ByteBuffer buf, Server server) {
+		
 		byte size = buf.get();
 		byte packetId = buf.get();
-		
-		System.out.println(size+ " "+packetId);
 		
 		if(packetId == PACKET_HANDSHAKE){
 			
@@ -87,6 +108,10 @@ public class PacketFactory {
 			if(version != Constants.VERSION){
 				user.sendData(getLoginStatus((byte) 1));
 				user.disconnect();
+			}else{
+				String name = "Default ("+user.getUniqueID()+")";
+				user.setUsername(name);
+				user.sendData(getNameChangePacket(name));
 			}
 			
 		}else if(packetId == PACKET_CHAT_MESSAGE){
@@ -100,6 +125,17 @@ public class PacketFactory {
 			message = new String(messageBytes);
 			
 			System.out.println(user.getUsername()+": "+message);
+			
+		}else if(packetId == PACKET_QUIT){
+			user.disconnect();
+		}else if(packetId == PACKET_CHANGE_NAME){
+			byte[] nameBytes = new byte[Constants.MAX_NAME_LENGTH];
+			String name = null;
+			
+			buf.get(nameBytes);
+			name = new String(nameBytes).trim();
+			
+			user.setUsername(name);
 			
 		}
 		
