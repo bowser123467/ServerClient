@@ -49,7 +49,7 @@ public class User {
 			isTimedout = true;
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 			disconnect();
 		}
 	}
@@ -71,7 +71,7 @@ public class User {
 		} catch(SocketTimeoutException e) {
 			return new byte[0];
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 			disconnect();
 		}
 		return new byte[0];
