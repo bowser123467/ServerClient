@@ -4,11 +4,9 @@ import java.nio.ByteBuffer;
 
 public abstract class PacketHook {
 
-	private byte packetId;
+	private final byte packetId;
 	
-	PacketHook() {
-		PacketFactory.hook(this);
-	}
+	private boolean isHooked;
 	
 	public PacketHook(byte packetId){
 		this.packetId = packetId;
@@ -18,6 +16,13 @@ public abstract class PacketHook {
 	
 	public byte getPacketId(){
 		return packetId;
+	}
+	
+	public void hook(){
+		if(isHooked)
+			return;
+		isHooked = true;
+		PacketFactory.hook(this);
 	}
 	
 }
