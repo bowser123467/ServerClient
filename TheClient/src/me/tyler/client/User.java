@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 public class User
@@ -23,14 +22,6 @@ public class User
 	public User(Socket socket)
 	{
 		this.socketTcp = socket;
-		try
-		{
-			this.socketUdp = new DatagramSocket();
-		}
-		catch (SocketException e)
-		{
-			e.printStackTrace();
-		}
 		isTimedout = false;
 	}
 

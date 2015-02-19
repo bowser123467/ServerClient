@@ -96,16 +96,6 @@ public class PacketFactory
 		return buf.array();
 	}
 
-	public static byte[] getUdpTest()
-	{
-		ByteBuffer buf = getUdpBuffer();
-
-		buf.put(PACKET_HANDSHAKE);
-		buf.putInt(Constants.VERSION);
-
-		return buf.array();
-	}
-
 	private static ByteBuffer getLazyBuffer(int size)
 	{
 
@@ -126,19 +116,12 @@ public class PacketFactory
 		return buf;
 	}
 
-	private static ByteBuffer getUdpBuffer()
-	{
-		return getLazyBuffer(Constants.UDP_LENGTH);
-	}
-
 	@SuppressWarnings("unused")
 	public static void process(User user, ByteBuffer buf, Server server)
 	{
 
 		byte size = buf.get();
 		byte packetId = buf.get();
-
-		System.out.println(size + " " + packetId);
 
 		if (packetId == PACKET_HANDSHAKE)
 		{
