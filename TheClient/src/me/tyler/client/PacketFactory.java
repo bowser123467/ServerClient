@@ -91,6 +91,16 @@ public class PacketFactory {
 		return buf.array();
 	}
 	
+	public static byte[] getUdpTest()
+	{
+		ByteBuffer buf = getUdpBuffer();
+
+		buf.put(PACKET_HANDSHAKE);
+		buf.putInt(Constants.VERSION);
+
+		return buf.array();
+	}
+	
 	private static ByteBuffer getLazyBuffer(int size){
 		
 		if(size <= 0){
@@ -107,6 +117,10 @@ public class PacketFactory {
 		return buf;
 	}
 	
+	private static ByteBuffer getUdpBuffer()
+	{
+		return getLazyBuffer(Constants.UDP_LENGTH);
+	}
 
 	public static void process(ByteBuffer buf, Client client) {
 		byte size = buf.get();
@@ -122,6 +136,8 @@ public class PacketFactory {
 				client.getMe().disconnect();
 			}else{
 				client.getMe().sendReliableData(getHandshakePacket());
+				client.getMe().sendData(getUdpTest(), client);
+				System.out.println("Hello");
 			}
 			
 		}else if(packetId == PACKET_CHAT_MESSAGE){
