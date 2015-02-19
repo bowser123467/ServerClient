@@ -26,6 +26,7 @@ public class Client {
 	}
 
 	private void run() {
+		System.out.println("Starting client running "+me.isConnected());
 		while (me.isConnected()) {
 			runOnce();
 		}
@@ -47,7 +48,6 @@ public class Client {
 				PacketFactory.process(buf, this);
 			}
 		}
-		me.sendReliableData(PacketFactory.getChatMessagePacket("Hello!"));
 	}
 
 	public static void main(String[] args) {

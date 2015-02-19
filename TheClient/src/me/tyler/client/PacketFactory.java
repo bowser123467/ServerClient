@@ -136,8 +136,6 @@ public class PacketFactory {
 				client.getMe().disconnect();
 			}else{
 				client.getMe().sendReliableData(getHandshakePacket());
-				client.getMe().sendData(getUdpTest(), client);
-				System.out.println("Hello");
 			}
 			
 		}else if(packetId == PACKET_CHAT_MESSAGE){

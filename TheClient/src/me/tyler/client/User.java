@@ -12,7 +12,7 @@ import java.net.SocketTimeoutException;
 public class User
 {
 
-	private final Socket socketTcp;
+	private Socket socketTcp;
 
 	private DatagramSocket socketUdp;
 
@@ -22,10 +22,13 @@ public class User
 
 	public User(Socket socket)
 	{
-		this.socketTcp = socket;
+
 		try
 		{
+			this.socketTcp = socket;
+			socketTcp.setSoTimeout(10);
 			this.socketUdp = new DatagramSocket();
+			this.socketUdp.setSoTimeout(10);
 		}
 		catch (SocketException e)
 		{
