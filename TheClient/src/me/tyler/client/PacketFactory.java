@@ -121,7 +121,7 @@ public class PacketFactory {
 			if(version != Constants.VERSION){
 				client.getMe().disconnect();
 			}else{
-				client.getMe().sendReliableData(getHandshakePacket());
+				client.getMe().sendData(getHandshakePacket());
 			}
 			
 		}else if(packetId == PACKET_CHAT_MESSAGE){

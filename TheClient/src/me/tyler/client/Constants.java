@@ -10,6 +10,4 @@ public class Constants {
 	public static final String IP_ADDRESS = IS_DEBUG ? "localhost" : "hub.dwarfscraft.com";
 	public static final int MAX_NAME_LENGTH = 16;
 	
-	public static final int UDP_LENGTH = 32;
-	
 }
