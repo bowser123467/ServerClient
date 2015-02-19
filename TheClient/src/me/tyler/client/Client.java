@@ -47,6 +47,7 @@ public class Client {
 				PacketFactory.process(buf, this);
 			}
 		}
+		me.sendReliableData(PacketFactory.getChatMessagePacket("Hello!"));
 	}
 
 	public static void main(String[] args) {

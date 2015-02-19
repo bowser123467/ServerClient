@@ -154,7 +154,9 @@ public class User
 			try
 			{
 				server.getDatagramSocket().receive(packet);
+
 				bytes = packet.getData();
+				System.out.println("UDP: " + bytes[0] + " " + bytes[1]);
 			}
 			catch (SocketTimeoutException e)
 			{
